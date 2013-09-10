@@ -1,0 +1,17 @@
+<plugin>
+	<name>Force Preview</name>
+	<package>MuraForcePreview</package>
+	<provider>Matt</provider>
+	<providerURL>http://blueriver.com</providerURL>
+	<loadPriority>5</loadPriority>
+	<version>0</version>
+	<category>Application</category>
+	<ormcfclocation />
+	<customtagpaths />
+	<mappings />
+	<settings />
+	<eventHandlers>
+		<eventHandler event="onApplicationLoad" component="eventHandler" persist="false" />
+	</eventHandlers>
+	<displayobjects/>
+</plugin>
