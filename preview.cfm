@@ -63,51 +63,74 @@ if(url.approve && perm== 'editor' ){
 	}
 }
 </cfscript>
+<html lang="en_US" class="mura">
+<cfoutput>
+<head>	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
 
-<cfsavecontent variable="body">
-	<cfoutput>
-		<h2>Preview and <cfif requiresApproval>Send for Approval<cfelse>Approve</cfif></h2>
+    <!-- Spinner JS -->
+	<script src="#application.configBean.getContext()#/admin/assets/js/spin.min.js" type="text/javascript"></script>
+
+    <script src="#application.configBean.getContext()#/#application.settingsmanager.getSite(session.siteid).getDisplayPoolID()#/js/jquery/jquery.js" type="text/javascript"></script>
+	<script src="#application.configBean.getContext()#/admin/assets/js/jquery/jquery.collapsibleCheckboxTree.js?coreversion=#application.coreversion#" type="text/javascript"></script>
+	<script src="#application.configBean.getContext()#/admin/assets/js/porthole/porthole.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
+	<!-- Mura Admin JS -->
+	<script src="#application.configBean.getContext()#/admin/assets/js/admin.min.js" type="text/javascript"></script>
+
+	<script src="#application.configBean.getContext()#/admin/assets/js/json2.js" type="text/javascript"></script>
+	<script type="text/javascript" src="#application.configBean.getContext()#/admin/assets/js/admin.js"></script>
+	<link href="#application.configBean.getContext()#/admin/assets/css/admin.min.css" rel="stylesheet" type="text/css" />
+	<link href="#application.configBean.getContext()#/admin/assets/css/dialog.min.css" rel="stylesheet" type="text/css" />	
+
+	
+	<script type="text/javascript">
 		<cfif url.compactDisplay eq 'true'>
-		<script type="text/javascript">
-			$(function(){
+			var frontEndProxy;
+				jQuery(document).ready(function(){
+
+				if (top.location != self.location) {
+					frontEndProxy = new Porthole.WindowProxy("#session.frontEndProxyLoc##application.configBean.getContext()#/admin/assets/js/porthole/proxy.html");
+					frontEndProxy.post({cmd:
+						'setHeight',
+						height:Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight)
+						});
+					jQuery(this).resize(function(e){
+						frontEndProxy.post({cmd:
+							'setHeight',
+							height:Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight)
+						});
+					});					
+				};
+
 				parent.scrollTo(0,0);
 				frontEndProxy.post({cmd:'setWidth',width:1100});
-			});
-		</script>
+			});	
 		</cfif>
+
+		$(function(){
+			$('.btn').click(function(e){
+				e.preventDefaul();
+				actionModal($(this).attr('href'));
+			});
+		});
+	</script>
+ </head>
+ <body>
+<div align="center">
+	<h2>Preview and <cfif requiresApproval>Send for Approval<cfelse>Approve</cfif></h2>
 		<div class="btn-group">
-			<a class="btn active" href="#content.getEditURL(compactDisplay=url.compactDisplay)#">Keep Working</a>
-			<a class="btn active" href="preview.cfm?siteid=#content.getSiteID()#&contenthistid=#content.getContentHistID()#&approve=true&compactDisplay=#URLEncodedFormat(url.compactDisplay)#&changesetid=#URLEncodedFormat(url.changesetid)#">
+			<a class="btn" href="#content.getEditURL(compactDisplay=url.compactDisplay)#">Keep Working</a>
+			<a class="btn" href="preview.cfm?siteid=#content.getSiteID()#&contenthistid=#content.getContentHistID()#&approve=true&compactDisplay=#URLEncodedFormat(url.compactDisplay)#&changesetid=#URLEncodedFormat(url.changesetid)#">
 				#actionLabel#
 			</a>
 		</div>
-		<iframe src="#content.getURL(complete=true,queryString='?muraadminpreview')#" width="100%" height="600"/>
-			
-		<!---
-		<cfelse>	
-			<script type="text/javascript">
-				$(function(){
-					openPreviewDialog(
-						"#content.getURL(complete=true)#",
-						{
-							"#actionLabel#":function(){
-												actionModal(function(){location.href="preview.cfm?siteid=#content.getSiteID()#&contenthistid=#content.getContentHistID()#&approve=true&compactDisplay=#URLEncodedFormat(url.compactDisplay)#&changesetid=#URLEncodedFormat(url.changesetid)#"});
-											},
-							"Keep Working":function(){
-												actionModal(function(){location.href="#content.getEditURL()#"});
-											}
-						},
-						function(){
-									actionModal(function(){location.href="#content.getEditURL()#"});
-						}
-					);
-				});
-			</script>
-		</cfif>
-		--->
-	</cfoutput>
-</cfsavecontent>
-
-<cfoutput>
-	#$.getBean('pluginManager').renderAdminTemplate(body=body,compactDisplay=url.compactDisplay)#
+		<br/>
+		<br/>	
+	<div id="" style="overflow:scroll; height:1200; width:100%; align:center">
+		<iframe src="#content.getURL(complete=true,queryString='?muraadminpreview')#" width="100%" height="100%"/>
+	</div>	
+</div>	
+</body>
+</html>
 </cfoutput>
