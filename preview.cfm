@@ -73,8 +73,8 @@ if(url.approve && perm== 'editor' ){
 	<script src="#application.configBean.getContext()#/admin/assets/js/spin.min.js" type="text/javascript"></script>
 
     <script src="#application.configBean.getContext()#/#application.settingsmanager.getSite(session.siteid).getDisplayPoolID()#/js/jquery/jquery.js" type="text/javascript"></script>
-	<script src="#application.configBean.getContext()#/admin/assets/js/jquery/jquery.collapsibleCheckboxTree.js?coreversion=#application.coreversion#" type="text/javascript"></script>
-	<script src="#application.configBean.getContext()#/admin/assets/js/porthole/porthole.min.js?coreversion=#application.coreversion#" type="text/javascript"></script>
+    <script src="#application.configBean.getContext()#/admin/assets/js/jquery/jquery.spin.js" type="text/javascript"></script>
+	<cfif url.compactDisplay eq 'true'><script src="#application.configBean.getContext()#/admin/assets/js/porthole/porthole.min.js?coreversion=#application.coreversion#" type="text/javascript"></script></cfif>
 	<!-- Mura Admin JS -->
 	<script src="#application.configBean.getContext()#/admin/assets/js/admin.min.js" type="text/javascript"></script>
 
@@ -110,7 +110,7 @@ if(url.approve && perm== 'editor' ){
 
 		$(function(){
 			$('.btn').click(function(e){
-				e.preventDefaul();
+				e.preventDefault();
 				actionModal($(this).attr('href'));
 			});
 		});
