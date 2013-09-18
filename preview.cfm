@@ -40,15 +40,20 @@ if(requiresApproval){
 perm=$.getBean('permUtility').getNodePerm(content.getCrumbArray());
 
 if(url.approve && perm== 'editor' ){
-	content
-		.setForcePreview(false)
-		.setApproved(1)
-		.setChangesetID(url.changesetid)
-		.save();
+	content.setForcePreview(false).setChangesetID(url.changesetid);
+
+	if(!content.getApproved() && content.getActive()){
+		content.setActiveOverride(true);
+	}
+
+	content.setApproved(1).save();
+
 	session.topid=content.getContentID();
 
+	content.deleteVersion();
+
 	if(url.compactDisplay !='true'){
-	location(url="../../admin/?muraAction=cArch.list&moduleid=00000000000000000000000000000000000&siteid=#content.getSiteID()#&activeTab=0");
+		location(url="../../admin/?muraAction=cArch.list&moduleid=00000000000000000000000000000000000&siteid=#content.getSiteID()#&activeTab=0");
 	} else {
 		request.event=$.event();
 		rc={homeid='',

@@ -21,6 +21,7 @@ component extends="mura.plugin.pluginGenericEventHandler" {
 
 		if(listFindNoCase('Page,Folder,Gallery,Calender',$.content('type'))
 			 && $.content('approved')
+			 && $.content('approvalStatus') != 'Approved'
 			 && !(isBoolean($.content('forcepreview')) && !$.content('forcepreview'))
 		){	
 			$.event('forcepreview',true);
@@ -30,6 +31,9 @@ component extends="mura.plugin.pluginGenericEventHandler" {
 			$.content('changesetid','');
 		} else {
 			$.event('forcepreview',false);
+			if(isBoolean($.content('activeOverride')) && $.content('activeOverride')){
+				$.content('active',1);
+			}
 		}
 
 	}
