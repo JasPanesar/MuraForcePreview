@@ -25,7 +25,6 @@ component extends="mura.plugin.pluginGenericEventHandler" {
 		){	
 			$.event('forcepreview',true);
 			$.content('approved',0);
-			$.content('chaninid','');
 			$.event('approvalRequest','');
 			$.event('changesetid',$.content('changesetid'));
 			$.content('changesetid','');
