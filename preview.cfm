@@ -50,7 +50,7 @@ if(url.approve && perm== 'editor' ){
 
 	session.topid=content.getContentID();
 
-	content.deleteVersion();
+	$.getBean('content').loadBy(contenthistid=url.contenthistid).setActive(0).deleteVersion();
 
 	if(url.compactDisplay !='true'){
 		location(url="../../admin/?muraAction=cArch.list&moduleid=00000000000000000000000000000000000&siteid=#content.getSiteID()#&activeTab=0");
@@ -133,7 +133,7 @@ if(url.approve && perm== 'editor' ){
 		<br/>
 		<br/>	
 	<div id="" style="overflow:scroll; height:1200; width:100%; align:center">
-		<iframe src="#content.getURL(complete=true,queryString='?muraadminpreview')#" width="100%" height="100%"/>
+		<iframe src="#content.getURL(complete=true,queryString='?muraadminpreview&previewid=#content.getContentHistID()#')#" width="100%" height="100%"/>
 	</div>	
 </div>	
 </body>
