@@ -18,16 +18,7 @@ component extends="mura.plugin.pluginGenericEventHandler" {
 	}
 
 	function onBeforeContentSave($){
-		/*
-		var check1 = !(isObject($.event('approvalRequest')) && $.event('approvalRequest').getStatus() == 'Approved');
-		var check2 = !(isObject($.event('approvalRequest')) && $.event('approvalRequest').getStatus() == 'Approved');
-		var check3 =!(isBoolean($.content('forcepreview')) && !$.content('forcepreview'));
-		
-		writeDump(var=check1);
-		writeDump(var=check1);
-		writeDump(var=check1);
-		abort;
-		*/
+
 		if(listFindNoCase('Page,Folder,Gallery,Calender',$.content('type'))
 			 && $.content('approved')
 			 && !$.content('approvingChainRequest')
@@ -46,8 +37,7 @@ component extends="mura.plugin.pluginGenericEventHandler" {
 		}
 
 	}
-
-
+	
 	function onAfterContentSave($){
 		if($.event('forcepreview'))
 		{	
