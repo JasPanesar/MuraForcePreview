@@ -19,10 +19,13 @@ component extends="mura.plugin.pluginGenericEventHandler" {
 
 	function onBeforeContentSave($){
 
-		if(listFindNoCase('Page,Folder,Gallery,Calender',$.content('type'))
-			 && $.content('approved')
-			 && !$.content('approvingChainRequest')
-			 && !(isBoolean($.content('forcepreview')) && !$.content('forcepreview'))
+
+		if($.event('muraAction') == 'carch.update' 
+			&& $.event('action') == 'add'
+			&& listFindNoCase('Page,Folder,Gallery,Calender',$.content('type'))
+			&& $.content('approved')
+			&& !$.content('approvingChainRequest')
+			&& !(isBoolean($.content('forcepreview')) && !$.content('forcepreview'))
 		){	
 			$.event('forcepreview',true);
 			$.content('approved',0);
