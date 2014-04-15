@@ -42,7 +42,7 @@ component extends="mura.plugin.pluginGenericEventHandler" {
 	}
 	
 	function onAfterContentSave($){
-		if($.event('forcepreview'))
+		if(!$.content().hasErrors() && $.event('forcepreview'))
 		{	
 			location(url="../plugins/MuraForcePreview/preview.cfm?contenthistid=#$.content('contenthistid')#&siteid=#URLEncodedFormat($.content('siteid'))#&compactDisplay=#URLEncodedFormat($.event('compactDisplay'))#&changesetid=#URLEncodedFormat($.event('changesetid'))#", addToken=false);
 	
